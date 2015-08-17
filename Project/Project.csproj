@@ -11,7 +11,7 @@
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 		<ProjectGuid>{E537A50D-BFCC-4023-97CA-0A2977AF1BAE}</ProjectGuid>
 		<RootNamespace>HansKindberg</RootNamespace>
-		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<CodeAnalysisRuleSet>$(SolutionDir)CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
