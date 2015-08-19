@@ -5,7 +5,7 @@ using HansKindberg.DirectoryServices.Commands;
 
 namespace HansKindberg.DirectoryServices.Linq
 {
-	public class QueryProvider : HansKindberg.Linq.QueryProvider<IEntry>
+	public class QueryProvider : HansKindberg.Linq.QueryProvider
 	{
 		#region Constructors
 

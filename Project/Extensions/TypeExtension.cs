@@ -44,7 +44,6 @@ namespace HansKindberg.Extensions
 
 		#region Methods
 
-		[Obsolete("Maybe not the correct name for the method.")]
 		public static Type AsGenericType(this Type type, Type genericTypeDefinition)
 		{
 			return Instance.AsGenericType(type, genericTypeDefinition);

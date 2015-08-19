@@ -11,16 +11,6 @@ namespace HansKindberg.IntegrationTests.Linq
 	{
 		#region Methods
 
-		//private static Expression CreateExpression<TSource>(IQueryable<TSource> queryable, Expression<Func<TSource, bool>> predicate)
-		//{
-		//	if (queryable == null)
-		//		throw new ArgumentNullException("queryable");
-
-		//	if (predicate == null)
-		//		throw new ArgumentNullException("predicate");
-
-		//	return Expression.Call(null, ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TSource)), new[] { queryable.Expression, Expression.Quote(predicate) });
-		//}
 		[TestMethod]
 		public void CreateQuery_Test()
 		{
@@ -29,33 +19,15 @@ namespace HansKindberg.IntegrationTests.Linq
 			var queryable = new Queryable<string>(queryProvider);
 
 			var b = queryable.Where(value => value.Contains("A")).Expression;
-
-			b = b;
+			Assert.IsNotNull(b);
 
 			foreach(var item in queryable.Where(value => value.Contains("A")))
 			{
 				var temp = item;
-				temp = temp;
+				Assert.IsNotNull(temp);
 			}
 
-			//var expression = CreateExpression(queryable, value => value.Contains("A"));
-
-			//expression = expression;
-
 			Assert.Inconclusive("Temporary");
-
-			////var expression = new[] {"A", "B", "C"}.Where(value => value != "C").AsQueryable().Expression;
-			//var expression = new[] { "A", "B", "C" }.AsQueryable().Expression;
-
-			//try
-			//{
-			//	CreateQueryProvider().CreateQuery<string>(expression);
-			//}
-			//catch(ArgumentNullException argumentNullException)
-			//{
-			//	if(argumentNullException.ParamName == "expression")
-			//		throw;
-			//}
 		}
 
 		private static QueryProvider CreateQueryProvider<TElement>()

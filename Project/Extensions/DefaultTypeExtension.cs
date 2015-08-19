@@ -9,7 +9,6 @@ namespace HansKindberg.Extensions
 	{
 		#region Methods
 
-		[Obsolete("Maybe not the correct name for the method.")]
 		public virtual Type AsGenericType(Type type, Type genericTypeDefinition)
 		{
 			if(type == null)

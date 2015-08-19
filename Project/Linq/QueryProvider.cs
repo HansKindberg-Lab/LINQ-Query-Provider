@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -45,8 +44,6 @@ namespace HansKindberg.Linq
 
 		public virtual IQueryable<TElement> CreateQuery<TElement>(Expression expression)
 		{
-			this.ValidateGenericElementParameter(typeof(TElement));
-
 			return new Queryable<TElement>(this, expression);
 		}
 
@@ -72,47 +69,7 @@ namespace HansKindberg.Linq
 			if(genericType == null)
 				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The expression-type \"{0}\" for expression \"{1}\" must be a generic type of the generic type definition \"{2}\".", expression.Type, expression, genericTypeDefinition.FriendlyFullName()), "expression");
 
-			var elementType = genericType.GetGenericArguments()[0];
-
-			this.ValidateElementType(expression, elementType);
-
-			return elementType;
-		}
-
-		protected internal virtual void ValidateElementType(Expression expression, Type elementType) {}
-		protected internal virtual void ValidateGenericElementParameter(Type elementType) {}
-
-		#endregion
-	}
-
-	[Obsolete("Not sure if we need this generic query-provider.")]
-	public abstract class QueryProvider<T> : QueryProvider
-	{
-		#region Constructors
-
-		protected QueryProvider(IInstanceFactory instanceFactory) : base(instanceFactory) {}
-
-		#endregion
-
-		#region Methods
-
-		protected internal override void ValidateElementType(Expression expression, Type elementType)
-		{
-			var validElementType = typeof(T);
-
-			if(!validElementType.IsAssignableFrom(elementType))
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The generic expression-type \"{0}\" for expression:{1}{1}\"{2}\"{1}{1} must have an element-type assignable to \"{3}\".", expression != null ? expression.Type : null, Environment.NewLine, expression, validElementType.FriendlyFullName()), "expression");
-		}
-
-		[SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
-		protected internal override void ValidateGenericElementParameter(Type elementType)
-		{
-			var validElementType = typeof(T);
-
-			// ReSharper disable NotResolvedInText
-			if(!validElementType.IsAssignableFrom(elementType))
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The element-type, \"{0}\", must be assignable to \"{1}\".", elementType, validElementType.FriendlyFullName()), "TElement");
-			// ReSharper restore NotResolvedInText
+			return genericType.GetGenericArguments()[0];
 		}
 
 		#endregion
