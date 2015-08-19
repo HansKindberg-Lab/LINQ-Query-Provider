@@ -52,6 +52,27 @@ namespace HansKindberg.IntegrationTests.DirectoryServices
 			//Assert.Inconclusive("Temporary");
 		}
 
+		[TestMethod]
+		public void Miscellaneous_Tests()
+		{
+			var queryProvider = new QueryProvider(new ActivatorWrapper());
+
+			var directory = new Mock<BasicDirectory>(queryProvider) {CallBase = true}.Object;
+
+			var result = directory.Find<IEntry>().Where(entry => entry.DistinguishedName.Contains("a")).Select(entry => entry.DistinguishedName);
+
+			//Assert.AreEqual(1, result.Count());
+
+			foreach(var entry in result)
+			{
+				Assert.AreEqual("Test", entry);
+			}
+
+			Assert.AreEqual(0, result.Count());
+
+			//Assert.Inconclusive("Temporary");
+		}
+
 		#endregion
 	}
 }
