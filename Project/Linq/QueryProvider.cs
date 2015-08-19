@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -44,7 +45,7 @@ namespace HansKindberg.Linq
 
 		public virtual IQueryable<TElement> CreateQuery<TElement>(Expression expression)
 		{
-			this.ValidateElementType(expression, typeof(TElement));
+			this.ValidateGenericElementParameter(typeof(TElement));
 
 			return new Queryable<TElement>(this, expression);
 		}
@@ -79,6 +80,7 @@ namespace HansKindberg.Linq
 		}
 
 		protected internal virtual void ValidateElementType(Expression expression, Type elementType) {}
+		protected internal virtual void ValidateGenericElementParameter(Type elementType) {}
 
 		#endregion
 	}
@@ -99,7 +101,18 @@ namespace HansKindberg.Linq
 			var validElementType = typeof(T);
 
 			if(!validElementType.IsAssignableFrom(elementType))
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The generic expression-type \"{0}\" for expression \"{1}\" must have an element-type assignable to \"{2}\".", expression != null ? expression.Type : null, expression, validElementType.FriendlyFullName()), "expression");
+				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The generic expression-type \"{0}\" for expression:{1}{1}\"{2}\"{1}{1} must have an element-type assignable to \"{3}\".", expression != null ? expression.Type : null, Environment.NewLine, expression, validElementType.FriendlyFullName()), "expression");
+		}
+
+		[SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
+		protected internal override void ValidateGenericElementParameter(Type elementType)
+		{
+			var validElementType = typeof(T);
+
+			// ReSharper disable NotResolvedInText
+			if(!validElementType.IsAssignableFrom(elementType))
+				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The element-type, \"{0}\", must be assignable to \"{1}\".", elementType, validElementType.FriendlyFullName()), "TElement");
+			// ReSharper restore NotResolvedInText
 		}
 
 		#endregion

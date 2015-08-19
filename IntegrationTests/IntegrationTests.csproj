@@ -78,6 +78,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DirectoryServices\BasicDirectoryTest.cs" />
+    <Compile Include="DirectoryServices\Linq\QueryProviderTest.cs" />
     <Compile Include="Extensions\DefaultTypeExtensionTest.cs" />
     <Compile Include="Linq\QueryableTest.cs" />
     <Compile Include="Linq\QueryProviderTest.cs" />
